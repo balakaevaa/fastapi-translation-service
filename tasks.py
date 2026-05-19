@@ -18,7 +18,7 @@ def run_translation(t_id: int):
     model = TranslationModel.get_by_id(t_id)
 
     prefix = f"translate {model.base_lang} to {model.final_lang}: {model.text}"
-    input_ids = tokenizer(prefix, return_tensors="pt").input_ids
+    input_ids = tokenizer(prefix, return_tensors="pt")["input_ids"]
     outputs = translator.generate(input_ids, max_new_tokens=512)
     translation = tokenizer.decode(outputs[0], skip_special_tokens=True)
     model.translation = translation
